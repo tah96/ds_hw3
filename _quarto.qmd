@@ -4,23 +4,53 @@ format: html
 editor: visual
 ---
 
-## Quarto
-
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
-
-## Running Code
-
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+## Loading Files
 
 ```{r}
-1 + 1
+load("files/hw2_list.rda")
 ```
 
-You can add options to executable code like this
+## Task 1: Control Flow Practice
+
+We are creating a status column in the data frames within the list
 
 ```{r}
-#| echo: false
-2 * 2
+bp_list$treatment$status <- character(20)
+bp_list$placebo$status <- character(10)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+For the our dataframes (within the list), we are creating a for loop that follows the sequential logic of optimal (≤ 120), borderline (120 < bp ≤ 130), and high (> 130) to assign to the "status" column based on "post_bp"
+
+We can accomplish this by fetching the post_bp value for that record and updating the status value using a nested if/else statement.
+
+```{r}
+for (i in 1:nrow(bp_list$placebo)){
+  record_post_bp <- bp_list$placebo$post_bp[i]
+  if (record_post_bp <= 130){
+    if (record_post_bp <= 120) {
+      record_status <- "optimal"
+    } else {
+      record_status <- "borderline"
+    }
+  } else {
+    record_status <- "high"
+  } 
+  bp_list$placebo$status[i] <- record_status
+}
+
+for (i in 1:nrow(bp_list$treatment)){
+  record_post_bp <- bp_list$treatment$post_bp[i]
+  if (record_post_bp <= 130){
+    if (record_post_bp <= 120) {
+      record_status <- "optimal"
+    } else {
+      record_status <- "borderline"
+    }
+  } else {
+    record_status <- "high"
+  } 
+  bp_list$treatment$status[i] <- record_status
+}
+```
+
+## Task 2: Function Writing
