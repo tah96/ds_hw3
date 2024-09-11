@@ -158,18 +158,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(list_of_df)){</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    df_of_interest <span class="ot">&lt;-</span> list_of_df[[i]]</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    df_name <span class="ot">&lt;-</span> <span class="fu">names</span>(list_of_df[i])</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(df_name)</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    list_position_start <span class="ot">&lt;-</span> (i<span class="dv">-1</span>)<span class="sc">*</span><span class="dv">3</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(columns)){</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      <span class="fu">print</span>(columns[[i]])</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      column_avg <span class="ot">&lt;-</span> <span class="fu">my_fun</span>(df_of_interest[[columns[[i]]]])</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>      list_of_values[list_position_start <span class="sc">+</span> i] <span class="ot">&lt;-</span> column_avg</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>      value_names[list_position_start <span class="sc">+</span> i] <span class="ot">&lt;-</span> <span class="fu">paste</span>(df_name,<span class="at">sep=</span><span class="st">"_"</span>,columns[i])</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(list_of_values) <span class="ot">&lt;-</span> value_names</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(list_of_values)</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    list_position_start <span class="ot">&lt;-</span> (i<span class="dv">-1</span>)<span class="sc">*</span><span class="dv">3</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(columns)){</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>      column_avg <span class="ot">&lt;-</span> <span class="fu">my_fun</span>(df_of_interest[[columns[[i]]]])</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>      list_of_values[list_position_start <span class="sc">+</span> i] <span class="ot">&lt;-</span> column_avg</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>      value_names[list_position_start <span class="sc">+</span> i] <span class="ot">&lt;-</span> <span class="fu">paste</span>(df_name,columns[i],summary_stat,<span class="at">sep=</span><span class="st">"_"</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(list_of_values) <span class="ot">&lt;-</span> value_names</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(list_of_values)</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now lets use this function with no summary stat as input (mean), “var”, “sd”, “min”, and “max”.</p>
+<p>Lets print the max_list to make sure the result is as expected</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>mean_list <span class="ot">&lt;-</span> <span class="fu">retrieve_data</span>(bp_list)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>var_list <span class="ot">&lt;-</span> <span class="fu">retrieve_data</span>(bp_list,<span class="at">summary_stat=</span><span class="st">"var"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>sd_list <span class="ot">&lt;-</span> <span class="fu">retrieve_data</span>(bp_list,<span class="at">summary_stat=</span><span class="st">"sd"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>min_list <span class="ot">&lt;-</span> <span class="fu">retrieve_data</span>(bp_list,<span class="at">summary_stat=</span><span class="st">"min"</span>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>max_list <span class="ot">&lt;-</span> <span class="fu">retrieve_data</span>(bp_list,<span class="at">summary_stat=</span><span class="st">"max"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>max_list</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$treatment_pre_bp_max
+[1] 151
+
+$treatment_post_bp_max
+[1] 146
+
+$treatment_diff_bp_max
+[1] 21
+
+$placebo_pre_bp_max
+[1] 152
+
+$placebo_post_bp_max
+[1] 143
+
+$placebo_diff_bp_max
+[1] 33</code></pre>
+</div>
 </div>
 </section>
 

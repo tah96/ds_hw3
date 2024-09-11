@@ -86,11 +86,15 @@ retrieve_data <- function(list_of_df,summary_stat="mean",columns=list("pre_bp","
 
 Now lets use this function with no summary stat as input (mean), "var", "sd", "min", and "max".
 
+Lets print the max_list to make sure the result is as expected
+
 ```{r}
-retrieve_data(bp_list)
-retrieve_data(bp_list,summary_stat="var")
-retrieve_data(bp_list,summary_stat="sd")
-retrieve_data(bp_list,summary_stat="min")
-retrieve_data(bp_list,summary_stat="max")
+mean_list <- retrieve_data(bp_list)
+var_list <- retrieve_data(bp_list,summary_stat="var")
+sd_list <- retrieve_data(bp_list,summary_stat="sd")
+min_list <- retrieve_data(bp_list,summary_stat="min")
+max_list <- retrieve_data(bp_list,summary_stat="max")
+
+max_list
 ```
 
